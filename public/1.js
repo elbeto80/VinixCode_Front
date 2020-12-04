@@ -22,7 +22,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
+  },
+  methods: {},
   mounted: function mounted() {}
 });
 
@@ -43,30 +73,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "text-center" }, [
-    _c("div", { staticClass: "error mx-auto", attrs: { "data-text": "404" } }, [
-      _vm._v("404")
+  return _c("div", { staticClass: "content-wrapper" }, [
+    _c("section", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row mb-2" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("ol", { staticClass: "breadcrumb float-sm-right" }, [
+              _c(
+                "li",
+                { staticClass: "breadcrumb-item" },
+                [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Inicio")])],
+                1
+              ),
+              _vm._v(" "),
+              _c("li", { staticClass: "breadcrumb-item active" }, [
+                _vm._v("404 Not Found")
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("hr", { staticStyle: { margin: "0" } })
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "error-content" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "p",
-        [
-          _vm._v(
-            "\n            No pudimos encontrar la página que estabas buscando. Mientras tanto, puedes\n            "
-          ),
-          _c("router-link", { attrs: { to: "/" } }, [
-            _vm._v("Regrear al Inicio")
+    _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "card card-solid" }, [
+        _c("div", { staticClass: "card-body padding_07em" }, [
+          _c("div", { staticClass: "error-page" }, [
+            _c("h2", { staticClass: "headline text-warning" }, [
+              _vm._v(" 404")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "error-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _vm._v(
+                    "\n                            No pudimos encontrar la página que estabas buscando. Mientras tanto, puedes\n                            "
+                  ),
+                  _c("router-link", { attrs: { to: "/" } }, [
+                    _vm._v("Regrear al Inicio")
+                  ])
+                ],
+                1
+              )
+            ])
           ])
-        ],
-        1
-      )
+        ])
+      ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-6" }, [
+      _c("h1", [_vm._v("Página no encontrada")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
