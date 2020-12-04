@@ -1,17 +1,7 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Example Component</div>
-
-                    <div class="card-body">
-                        componente inicio
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <h2>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa iste doloribus soluta itaque quia tempora magni veritatis! Doloribus, voluptate impedit molestias facere est laborum? Molestiae laboriosam aspernatur necessitatibus repellendus reiciendis.
+    </h2>
 </template>
 
 <script>
