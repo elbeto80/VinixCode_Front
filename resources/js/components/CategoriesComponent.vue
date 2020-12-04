@@ -18,7 +18,7 @@
 
         <section class="content">
             <div class="card card-solid">
-                <div class="card-body padding_07em">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-md-12  mb-3">
                             <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevaCategoria">Nueva categoría</button>
@@ -62,19 +62,18 @@
                                                 <i class="nav-icon far fa-trash-alt"></i>
                                             </button>
                                         </td>
-
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
-                        <div class="modal fade" id="modalNuevaCategoria" tabindex="-1"  aria-hidden="true">
+                        <div class="modal fade" id="modalNuevaCategoria" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel" v-text="idCategory > 0 ? 'Editar categoría' : 'Agregar categoría' "></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                    <span aria-hidden="true" @click="clearInputs">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">

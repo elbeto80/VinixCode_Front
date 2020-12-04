@@ -52760,7 +52760,7 @@ var routes = [{
 }, {
   path: '/tags',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/TagsComponent.vue */ "./resources/js/components/TagsComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/TagsComponent.vue */ "./resources/js/components/TagsComponent.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
