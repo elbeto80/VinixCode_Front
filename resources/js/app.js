@@ -10,6 +10,8 @@ const routes = [
     { path: '*', component:()=> import('./components/NotFound.vue') },
     { path: '/', component:()=> import('./components/HomeComponent.vue') },
     { path: '/pets', component:()=> import('./components/PetsComponent.vue') },
+    { path: '/categories', component:()=> import('./components/CategoriesComponent.vue') },
+    { path: '/tags', component:()=> import('./components/TagsComponent.vue') },
 ]
 
 const router = new VueRouter({

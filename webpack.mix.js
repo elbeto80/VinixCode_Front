@@ -7,9 +7,11 @@ mix.styles([
  ], 'public/css/template.css').
  scripts([
     'resources/template/js/jquery.min.js',
-    'resources/template/js/bootstrap.bundle.min.js',
+    // 'resources/template/js/bootstrap.bundle.min.js',
     'resources/template/js/adminlte.min.js',
     'resources/template/js/demo.js',
+    'resources/template/js/sweetalert.min.js',
+    'resources/template/js/main.js',
  ], 'public/js/template.js').
  js(['resources/js/app.js'], 'public/js/app.js').
  version();

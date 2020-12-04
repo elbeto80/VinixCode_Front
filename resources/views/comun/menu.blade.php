@@ -17,6 +17,24 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
+                    <router-link to="/categories" class="nav-link">
+                        <i class="nav-icon fas fa-paw"></i>
+                        <p>
+                            Categorías
+                        </p>
+                    </router-link>
+                </li>
+
+                <li class="nav-item">
+                    <router-link to="/tags" class="nav-link">
+                        <i class="nav-icon fas fa-tags"></i>
+                        <p>
+                            Etiquetas
+                        </p>
+                    </router-link>
+                </li>
+
+                <li class="nav-item">
                     <router-link to="/pets" class="nav-link">
                         <i class="nav-icon fas fa-dog"></i>
                         <p>

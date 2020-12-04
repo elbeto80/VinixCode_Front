@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ mix('css/template.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     </head>
 
     <body class="hold-transition sidebar-mini">
