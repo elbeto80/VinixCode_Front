@@ -188,6 +188,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -208,7 +216,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       listTags: [],
       listStatus: [],
       miniatura: '',
-      url: ''
+      url: '',
+      searchStatus: ''
     };
   },
   computed: {
@@ -373,7 +382,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context3.next = 4;
                 return axios.get(urlApi + '/pet', {
                   params: {
-                    inputSearch: me.inputSearch
+                    inputSearch: me.inputSearch,
+                    searchStatus: me.searchStatus
                   }
                 }).then(function (response) {
                   me.listPets = response.data.info.pets;
@@ -555,7 +565,7 @@ var render = function() {
           _c("div", { staticClass: "row" }, [
             _vm._m(1),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-2 col-sm-6 col-xs-12" }, [
+            _c("div", { staticClass: "col-md-2 col-sm-4 col-xs-12" }, [
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("input", {
                   directives: [
@@ -567,7 +577,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control form-control-sm",
-                  attrs: { type: "text" },
+                  attrs: { type: "text", placeholder: "Id o nombre" },
                   domProps: { value: _vm.inputSearch },
                   on: {
                     keyup: function($event) {
@@ -592,7 +602,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6 col-sm-6 col-xs-6" }, [
+            _c("div", { staticClass: "col-md-5 col-sm-4 col-xs-6" }, [
               _c(
                 "button",
                 {
@@ -614,6 +624,60 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-5 col-sm-4 col-xs-6 text-right" },
+              [
+                _c("label", [_vm._v("Filtro status  ")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchStatus,
+                        expression: "searchStatus"
+                      }
+                    ],
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.searchStatus = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        },
+                        _vm.getPets
+                      ]
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }, [_vm._v("Tod@s")]),
+                    _vm._v(" "),
+                    _vm._l(_vm.listStatus, function(statu, index) {
+                      return _c("option", {
+                        key: index,
+                        domProps: {
+                          value: statu.id,
+                          textContent: _vm._s(statu.name)
+                        }
+                      })
+                    })
+                  ],
+                  2
+                )
+              ]
+            ),
+            _vm._v(" "),
             _c("div", { staticClass: "col-md-12" }, [
               _c("table", { staticClass: "table table-bordered" }, [
                 _vm._m(3),
@@ -623,11 +687,11 @@ var render = function() {
                   [
                     _vm.listPets.length <= 0
                       ? _c("tr", [_vm._m(4)])
-                      : _vm._l(_vm.listPets, function(pet, index) {
+                      : _vm._l(_vm.listPets, function(pet) {
                           return _c("tr", { key: pet.id }, [
                             _c("th", {
                               attrs: { scope: "row" },
-                              domProps: { textContent: _vm._s(index + 1) }
+                              domProps: { textContent: _vm._s(pet.id) }
                             }),
                             _vm._v(" "),
                             _c("td", {
@@ -985,14 +1049,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12  mb-3" }, [
+    return _c("div", { staticClass: "col-md-12 mb-3" }, [
       _c(
         "button",
         {
           staticClass: "btn btn-primary",
           attrs: { "data-toggle": "modal", "data-target": "#modalNuevaPet" }
         },
-        [_vm._v("Nueva Mascota")]
+        [_vm._v("Nueva mascota")]
       )
     ])
   },
@@ -1012,7 +1076,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-light" }, [
       _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Id")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre mascota")]),
         _vm._v(" "),

@@ -20,29 +20,37 @@
             <div class="card card-solid">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-12  mb-3">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevaPet">Nueva Mascota</button>
+                        <div class="col-md-12 mb-3">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalNuevaPet">Nueva mascota</button>
                         </div>
 
-                        <div class="col-md-2 col-sm-6 col-xs-12">
+                        <div class="col-md-2 col-sm-4 col-xs-12">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control form-control-sm" v-model="inputSearch" @keyup.enter="getPets">
+                                <input type="text" class="form-control form-control-sm" v-model="inputSearch" @keyup.enter="getPets" placeholder="Id o nombre">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="fas fa-search"></i></span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-6 col-sm-6 col-xs-6">
+                        <div class="col-md-5 col-sm-4 col-xs-6">
                             <button class="btn btn-primary btn-sm" value="filter" @click="getPets">Buscar</button>
                             <button class="btn btn-secondary btn-sm" type="button" @click="clearSearch">Limpiar</button>
+                        </div>
+
+                        <div class="col-md-5 col-sm-4 col-xs-6 text-right">
+                            <label>Filtro status&nbsp;&nbsp;</label>
+                            <select v-model="searchStatus" @change="getPets">
+                                <option value=''>Tod@s</option>
+                                <option v-for="(statu,index) in listStatus" :key="index" :value="statu.id" v-text="statu.name"></option>
+                            </select>
                         </div>
 
                         <div class="col-md-12">
                             <table class="table table-bordered">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">#</th>
+                                        <th scope="col">Id</th>
                                         <th scope="col">Nombre mascota</th>
                                         <th scope="col">Categoría</th>
                                         <th scope="col">Etiquetas</th>
@@ -55,8 +63,8 @@
                                     <tr v-if="listPets.length <= 0">
                                         <td colspan="7"> <h5>No Hay Elementos Para Mostrar</h5> </td>
                                     </tr>
-                                    <tr v-for="(pet,index) in listPets" :key="pet.id" v-else>
-                                        <th scope="row" v-text="index+1"></th>
+                                    <tr v-for="pet in listPets" :key="pet.id" v-else>
+                                        <th scope="row" v-text="pet.id"></th>
                                         <td v-text="pet.name"></td>
                                         <td v-text="pet.categoryName"></td>
                                         <td v-text="( labelTags(pet.tags) )"></td>
@@ -190,6 +198,7 @@
                 listStatus: [],
                 miniatura: '',
                 url: '',
+                searchStatus: '',
             }
         },
 
@@ -308,7 +317,8 @@
                 let me = this;
                 await axios.get(urlApi+'/pet',{
                     params: {
-                        inputSearch: me.inputSearch,
+                        inputSearch:  me.inputSearch,
+                        searchStatus: me.searchStatus,
                     }
                 })
                 .then(function (response) {
