@@ -52740,27 +52740,27 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '*',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+    return __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
   }
 }, {
   path: '/',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue"));
+    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue"));
   }
 }, {
   path: '/pets',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/PetsComponent.vue */ "./resources/js/components/PetsComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./components/PetsComponent.vue */ "./resources/js/components/PetsComponent.vue"));
   }
 }, {
   path: '/categories',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/CategoriesComponent.vue */ "./resources/js/components/CategoriesComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/CategoriesComponent.vue */ "./resources/js/components/CategoriesComponent.vue"));
   }
 }, {
   path: '/tags',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/TagsComponent.vue */ "./resources/js/components/TagsComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/TagsComponent.vue */ "./resources/js/components/TagsComponent.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({
