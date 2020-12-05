@@ -173,6 +173,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -186,16 +201,46 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       tags: [],
       status: '',
       photo: '',
+      petPhoto: '',
       inputSearch: '',
       listPets: [],
       listCategories: [],
       listTags: [],
-      listStatus: []
+      listStatus: [],
+      miniatura: '',
+      url: ''
     };
   },
+  computed: {
+    imagen: function imagen() {
+      return this.miniatura;
+    }
+  },
   methods: {
-    paramsPets: function paramsPets() {
+    obtenerImagen: function obtenerImagen(e) {
+      var file = e.target.files[0];
+
+      if (!file || file == '') {
+        this.miniatura = '';
+        return false;
+      }
+
+      this.photo = file;
+      this.cargarImagen(file);
+    },
+    cargarImagen: function cargarImagen(file) {
       var _this = this;
+
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        _this.miniatura = e.target.result;
+      };
+
+      reader.readAsDataURL(file);
+    },
+    paramsPets: function paramsPets() {
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
         var me;
@@ -203,7 +248,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                me = _this;
+                me = _this2;
                 CargandoSweet(0, 'Cargando...');
                 _context.next = 4;
                 return axios.get(urlApi + '/pet/params').then(function (response) {
@@ -233,15 +278,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     savePet: function savePet() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        var me;
+        var me, formData;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                if (_this2.validateInputs()) {
+                if (_this3.validateInputs()) {
                   _context2.next = 2;
                   break;
                 }
@@ -249,17 +294,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context2.abrupt("return", false);
 
               case 2:
-                me = _this2;
+                me = _this3;
                 CargandoSweet(0, 'Guardando...');
-                _context2.next = 6;
-                return axios.post(urlApi + '/pet', {
-                  idPet: me.idPet,
-                  petName: me.petName.trim(),
-                  category: me.category,
-                  tags: me.tags,
-                  status: me.status,
-                  photo: me.photo
-                }).then(function (response) {
+                formData = new FormData();
+                formData.append('idPet', _this3.idPet);
+                formData.append('petName', _this3.petName.trim());
+                formData.append('category', JSON.stringify(_this3.category));
+                formData.append('tags', JSON.stringify(_this3.tags));
+                formData.append('status', JSON.stringify(_this3.status));
+                formData.append('photo', _this3.photo);
+                _context2.next = 13;
+                return axios.post(urlApi + '/pet', formData).then(function (response) {
                   CargandoSweet(1);
 
                   if (response.data.error) {
@@ -277,7 +322,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   Success_Error_Mostrar('Error', error, 'error');
                 });
 
-              case 6:
+              case 13:
               case "end":
                 return _context2.stop();
             }
@@ -296,6 +341,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return false;
       }
 
+      if (this.photo == '' && this.idPet == 0) {
+        Success_Error_Mostrar('Falta información', 'Foto es abligatorio', 'warning');
+        return false;
+      }
+
       return true;
     },
     clearInputs: function clearInputs() {
@@ -304,10 +354,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.category = [];
       this.tags = [];
       this.status = '';
+      this.petPhoto = '';
       this.photo = '';
+      this.miniatura = '';
+      $("#file").val('');
     },
     getPets: function getPets() {
-      var _this3 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var me;
@@ -316,7 +369,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context3.prev = _context3.next) {
               case 0:
                 CargandoSweet(0, 'Cargando...');
-                me = _this3;
+                me = _this4;
                 _context3.next = 4;
                 return axios.get(urlApi + '/pet', {
                   params: {
@@ -361,7 +414,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         'id': pet.status,
         'name': pet.statusName
       };
-      this.photo = pet.photourls;
+      this.petPhoto = pet.photourls;
       var data = [];
       pet['tags'].forEach(function (info) {
         data.push({
@@ -372,7 +425,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.tags = data;
     },
     deletePet: function deletePet(pet) {
-      var _this4 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
@@ -391,7 +444,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   cancelButtonText: 'Cancelar'
                 }).then(function (result) {
                   if (result.value) {
-                    var me = _this4;
+                    var me = _this5;
                     CargandoSweet(0, 'Eliminando...');
                     axios.post(urlApi + '/pet/delete', {
                       idPet: pet.id
@@ -428,7 +481,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mounted: function mounted() {
-    var _this5 = this;
+    var _this6 = this;
 
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
@@ -436,13 +489,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           switch (_context5.prev = _context5.next) {
             case 0:
               _context5.next = 2;
-              return _this5.getPets();
+              return _this6.getPets();
 
             case 2:
               _context5.next = 4;
-              return _this5.paramsPets();
+              return _this6.paramsPets();
 
             case 4:
+              _this6.url = urlApi;
+
+            case 5:
             case "end":
               return _context5.stop();
           }
@@ -594,9 +650,20 @@ var render = function() {
                               domProps: { textContent: _vm._s(pet.statusName) }
                             }),
                             _vm._v(" "),
-                            _c("td", {
-                              domProps: { textContent: _vm._s(pet.photourls) }
-                            }),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-success btn-xs",
+                                  attrs: {
+                                    href: _vm.url + pet.photourls,
+                                    target: "_blank",
+                                    title: "Ver imagen"
+                                  }
+                                },
+                                [_c("i", { staticClass: "far fa-image" })]
+                              )
+                            ]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -660,7 +727,7 @@ var render = function() {
                 }
               },
               [
-                _c("div", { staticClass: "modal-dialog" }, [
+                _c("div", { staticClass: "modal-dialog modal-lg" }, [
                   _c("div", { staticClass: "modal-content" }, [
                     _c("div", { staticClass: "modal-header" }, [
                       _c(
@@ -818,36 +885,55 @@ var render = function() {
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-12 form-group" }, [
-                          _c("label", { attrs: { for: "photo" } }, [
-                            _vm._v("Foto")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.photo,
-                                expression: "photo"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "photo",
-                              autocomplete: "off"
+                          _c(
+                            "label",
+                            {
+                              staticClass: "marginBotto_0",
+                              attrs: { for: "file" }
                             },
-                            domProps: { value: _vm.photo },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                            [_vm._v("Imagen")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "custom-file" }, [
+                            _c("input", {
+                              attrs: {
+                                id: "file",
+                                type: "file",
+                                accept: ".jpg, .jpeg, .png, .gif, .bmp"
+                              },
+                              on: { change: _vm.obtenerImagen }
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm.petPhoto
+                          ? _c("div", { staticClass: "col-md-6 text-center" }, [
+                              _c("label", { staticClass: "marginBotto_0" }, [
+                                _vm._v("Imagen guardada")
+                              ]),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("img", {
+                                attrs: {
+                                  src: _vm.url + _vm.petPhoto,
+                                  width: "120px"
                                 }
-                                _vm.photo = $event.target.value
-                              }
-                            }
-                          })
-                        ])
+                              })
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.miniatura
+                          ? _c("div", { staticClass: "col-md-6 text-center" }, [
+                              _c("label", { staticClass: "marginBotto_0" }, [
+                                _vm._v("Imagen seleccionada")
+                              ]),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("img", {
+                                attrs: { src: _vm.imagen, width: "120px" }
+                              })
+                            ])
+                          : _vm._e()
                       ])
                     ]),
                     _vm._v(" "),

@@ -61,7 +61,12 @@
                                         <td v-text="pet.categoryName"></td>
                                         <td v-text="( labelTags(pet.tags) )"></td>
                                         <td v-text="pet.statusName"></td>
-                                        <td v-text="pet.photourls"></td>
+                                        <!-- <td v-text="pet.photourls"></td> -->
+                                        <td>
+                                            <a class="btn btn-success btn-xs" :href="url+pet.photourls" target="_blank" title="Ver imagen">
+                                                <i class="far fa-image"></i>
+                                            </a>
+                                        </td>
                                         <td>
                                             <button class="btn btn-warning btn-xs" title="Editar etiqueta" data-toggle="modal" data-target="#modalNuevaPet" @click="editPet(pet)">
                                                 <i class="nav-icon fas fa-pencil-alt"></i>
@@ -76,7 +81,7 @@
                         </div>
 
                         <div class="modal fade" id="modalNuevaPet" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                            <div class="modal-dialog">
+                            <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Nueva mascota</h5>
@@ -132,8 +137,18 @@
                                             />
                                         </div>
                                         <div class="col-md-12 form-group">
-                                            <label for="photo">Foto</label>
-                                            <input type="text" class="form-control" id="photo" autocomplete="off" v-model="photo">
+                                            <label for="file" class="marginBotto_0">Imagen</label>
+                                            <div class="custom-file">
+                                                <input id="file" type="file" accept=".jpg, .jpeg, .png, .gif, .bmp" @change="obtenerImagen">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 text-center" v-if="petPhoto">
+                                            <label class="marginBotto_0">Imagen guardada</label><br>
+                                            <img :src="url+petPhoto" width="120px">
+                                        </div>
+                                        <div class="col-md-6 text-center" v-if="miniatura">
+                                            <label class="marginBotto_0">Imagen seleccionada</label><br>
+                                            <img :src="imagen" width="120px">
                                         </div>
                                     </div>
                                 </div>
@@ -166,16 +181,42 @@
                 tags: [],
                 status: '',
                 photo: '',
+                petPhoto: '',
                 inputSearch: '',
 
                 listPets: [],
                 listCategories: [],
                 listTags: [],
                 listStatus: [],
+                miniatura: '',
+                url: '',
+            }
+        },
+
+        computed: {
+            imagen() {
+                return this.miniatura;
             }
         },
 
         methods: {
+            obtenerImagen(e) {
+                let file = e.target.files[0];
+                if( !file || file == '' ) {
+                    this.miniatura = '';
+                    return false;
+                }
+                this.photo = file;
+                this.cargarImagen(file);
+            },
+            cargarImagen(file) {
+                let reader = new FileReader();
+                reader.onload = (e) => {
+                    this.miniatura = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            },
+
             async paramsPets() {
                 let me = this;
                 CargandoSweet(0, 'Cargando...');
@@ -203,14 +244,16 @@
                 if( !this.validateInputs() ) { return false; }
                 let me = this;
                 CargandoSweet(0, 'Guardando...');
-                await axios.post(urlApi+'/pet', {
-                    idPet    : me.idPet,
-                    petName  : me.petName.trim(),
-                    category : me.category,
-                    tags     : me.tags,
-                    status   : me.status,
-                    photo    : me.photo,
-                })
+
+                let formData = new FormData();
+                formData.append('idPet', this.idPet);
+                formData.append('petName', this.petName.trim());
+                formData.append('category', JSON.stringify(this.category));
+                formData.append('tags', JSON.stringify(this.tags));
+                formData.append('status', JSON.stringify(this.status));
+                formData.append('photo', this.photo);
+
+                await axios.post(urlApi+'/pet',formData)
                 .then(function (response) {
                     CargandoSweet(1);
                     if(response.data.error) {
@@ -240,6 +283,11 @@
                     return false;
                 }
 
+                if( this.photo == '' && this.idPet == 0 ) {
+                        Success_Error_Mostrar('Falta información', 'Foto es abligatorio', 'warning');
+                        return false;
+                    }
+
                 return true;
             },
 
@@ -249,7 +297,10 @@
                 this.category = [];
                 this.tags = [];
                 this.status = '';
+                this.petPhoto = '';
                 this.photo = '';
+                this.miniatura = '';
+                $("#file").val('');
             },
 
             async getPets() {
@@ -284,11 +335,11 @@
             },
 
             editPet(pet) {
-                this.idPet      = pet.id;
-                this.petName    = pet.name;
-                this.category   = { 'id': pet.category, 'name': pet.categoryName };
-                this.status     = { 'id': pet.status, 'name': pet.statusName };
-                this.photo      = pet.photourls;
+                this.idPet    = pet.id;
+                this.petName  = pet.name;
+                this.category = { 'id': pet.category, 'name': pet.categoryName };
+                this.status   = { 'id': pet.status, 'name': pet.statusName };
+                this.petPhoto = pet.photourls;
 
                 let data = [];
                 pet['tags'].forEach( info => {
@@ -343,6 +394,7 @@
         async mounted() {
             await this.getPets();
             await this.paramsPets();
+            this.url = urlApi;
         }
     }
 </script>
